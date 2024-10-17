@@ -6,6 +6,7 @@ using namespace std;
 
 constexpr int RANK_MASTER = 0;      // Rango del proceso maestro
 constexpr int NUM_DATOS = 3;        // Número de datos a escribir y leer
+constexpr int ASCII_OFFSET = 48;    // Offset para convertir el rango a ASCII
 const char* NOMBRE_FICHERO = "Practica5.dat";  // Nombre del fichero
 
 int main(int argc, char* argv[]) {
@@ -28,9 +29,9 @@ int main(int argc, char* argv[]) {
     );
 
     // Escribir el rango del proceso en el fichero 3 veces
-    char write_values[NUM_DATOS];
+    char write_values[NUM_DATOS]{};
     for (int i = 0; i < NUM_DATOS; ++i) {
-        write_values[i] = rank + 48; // Convertir el rango a ASCII
+        write_values[i] = rank + ASCII_OFFSET; // Convertir el rango a ASCII
     }
     MPI_Offset offset = rank * NUM_DATOS * sizeof(char);
     MPI_File_write_at(fh, offset, write_values, NUM_DATOS, MPI_CHAR, MPI_STATUS_IGNORE);
